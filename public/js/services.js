@@ -38,7 +38,9 @@ function generateCards(cardArr) {
     cardDelBtn.className = 'card-del-button';
     cardDelBtn.textContent = 'need to add trash can icon';
     cardDelBtn.addEventListener('click', async (req, res) => {
-      const response = await fetch(`${BASE_URL}/services/${cardObj._id}`);
+      const response = await fetch(`${BASE_URL}/services/${cardObj._id}`, {
+        method: 'DELETE',
+      });
     });
     cardDelBtnCon.append(cardDelBtn);
     cardConEl.append(cardTitleEl, cardDescriptionEl, cardDelBtnCon);

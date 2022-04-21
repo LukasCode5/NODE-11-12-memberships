@@ -6,9 +6,9 @@ POST http://127.0.0.1:3000/api/services
 Content-Type: application/json
 
 {
-"name":"Gold",
-"price":6.99,
-"description":"This is 90 days basic membership"
+"name":"Trial",
+"price":1.99,
+"description":"This is 2 days membership"
 }
 ###
 DELETE  http://127.0.0.1:3000/api/services/626106834e528db8b1db29b2
