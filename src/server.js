@@ -1,8 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const usersRoutes = require('./api/usersRoutes');
 const { PORT } = require('./config');
+const servicesRoutes = require('./api/servicesRoutes');
+const usersRoutes = require('./api/usersRoutes');
 
 const app = express();
 
@@ -13,16 +14,19 @@ app.use(express.json());
 
 // Routes
 
-app.use('/api/', usersRoutes);
+app.use('/api', servicesRoutes);
+app.use('/api', usersRoutes);
 
 app.get('/', (request, response) => {
   response.json('Home sweet home');
 });
 
-// 404
-
-app.use((request, response) => {
-  response.status(404).json({ error: 'Not found' });
+// 404 route
+app.use(async (req, res) => {
+  res.status(404).json({ error: 'Route not found' });
+});
+app.all('*', async (req, res) => {
+  res.status(404).json({ error: 'Route not found' });
 });
 
 app.listen(PORT, () => console.log('Server works on port', +PORT));

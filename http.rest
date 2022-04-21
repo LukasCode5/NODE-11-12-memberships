@@ -1,4 +1,31 @@
 GET http://127.0.0.1:3000/
 ###
+GET http://127.0.0.1:3000/api/services
+###
+POST http://127.0.0.1:3000/api/services
+Content-Type: application/json
+
+{
+"name":"Gold",
+"price":6.99,
+"description":"This is 90 days basic membership"
+}
+###
+DELETE  http://127.0.0.1:3000/api/services/626106834e528db8b1db29b2
+###
 GET http://127.0.0.1:3000/api/users
+###
+GET http://127.0.0.1:3000/api/users/DESC
+###
+POST  http://127.0.0.1:3000/api/users
+Content-Type: application/json
+
+{
+    "name":"Zoey",
+    "surname":"Nikson",
+    "email":"zoey@gmail.com",
+    "service_id":"6260ff278972a4807fbb133c"
+}
+###
+DELETE  http://127.0.0.1:3000/api/users/62610d2754c7c56ad27a8409
 ###
