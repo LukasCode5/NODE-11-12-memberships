@@ -49,7 +49,16 @@ servicesRoutes.delete('/services/:serviceId', async (req, res) => {
     await dbClient.connect();
     const collection = dbClient.db(dbName).collection(collectionName);
     const deleteService = await collection.deleteOne({ _id: ObjectId(serviceId) });
-    res.json(deleteService);
+    // isitikinti kad istikro buvo istrinta
+    if (deleteService.deletedCount === 1) {
+      res.status(200).json({ success: true });
+      return;
+    }
+    if (deleteService.deletedCount === 0) {
+      res.status(400).json({ err: 'nothing was deleted' });
+      return;
+    }
+    res.status(500).json('something is wrong');
   } catch (error) {
     console.log('error === in deleting services', error);
     res.status(500).json('Something went wrong');

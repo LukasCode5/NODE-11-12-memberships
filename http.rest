@@ -24,7 +24,7 @@ Content-Type: application/json
     "name":"Zoey",
     "surname":"Nikson",
     "email":"zoey@gmail.com",
-    "service_id":"6260ff278972a4807fbb133c"
+    "service_id":"6261b4d2bae3eaad44321ab3"
 }
 ###
 DELETE  http://127.0.0.1:3000/api/users/62610d2754c7c56ad27a8409
