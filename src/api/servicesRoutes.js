@@ -9,12 +9,31 @@ const collectionName = 'services';
 
 // ROUTES
 
+// GET /api/services
 servicesRoutes.get('/services', async (req, res) => {
   try {
     await dbClient.connect();
     const collection = dbClient.db(dbName).collection(collectionName);
-    const servicesArr = await collection.find().toArray();
-    res.json(servicesArr);
+    const agg = [
+      {
+        $lookup: {
+          from: 'users',
+          localField: '_id',
+          foreignField: 'service_id',
+          as: 'usersArr',
+        },
+      },
+    ];
+    const servicesArr = await collection.aggregate(agg).toArray();
+    const servicesWithUserCount = servicesArr.map((sObj) => {
+      const rez = {
+        ...sObj,
+        userCount: sObj.usersArr.length,
+      };
+      delete rez.usersArr;
+      return rez;
+    });
+    res.json(servicesWithUserCount);
   } catch (error) {
     console.log('error === in get services', error);
     res.status(500).json('something went wrong');
@@ -22,7 +41,7 @@ servicesRoutes.get('/services', async (req, res) => {
     await dbClient.close();
   }
 });
-
+// POST /api/services
 servicesRoutes.post('/services', async (req, res) => {
   try {
     const { name, price, description } = req.body;
@@ -34,7 +53,13 @@ servicesRoutes.post('/services', async (req, res) => {
     await dbClient.connect();
     const collection = dbClient.db(dbName).collection(collectionName);
     const newPostService = await collection.insertOne(newService);
-    res.json(newPostService);
+    if (newPostService.insertedId) {
+      console.log('inserst ok');
+      // jei siunciam tik status tai sendStatus();
+      res.sendStatus(201);
+      return;
+    }
+    throw new Error('newPostService.insertedId false');
   } catch (error) {
     console.log('error === in posting services', error);
     res.status(500).json('Something went wrong');
@@ -42,7 +67,7 @@ servicesRoutes.post('/services', async (req, res) => {
     await dbClient.close();
   }
 });
-
+// DELETE /api/services/:serviceId
 servicesRoutes.delete('/services/:serviceId', async (req, res) => {
   try {
     const { serviceId } = req.params;

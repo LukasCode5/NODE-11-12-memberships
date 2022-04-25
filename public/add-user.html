@@ -6,32 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Memberships - add service</title>
     <link rel="stylesheet" href="./css/style.css" />
-    <script type="module" src="./js/add-services.js" defer></script>
+    <script type="module" src="./js/add-user.js" defer></script>
   </head>
 
   <body>
     <header>
       <div class="container">
         <nav class="main-nav">
-          <a href="index.html" class="nav-link active">Services</a>
-          <a href="users.html" class="nav-link">Users</a>
+          <a href="index.html" class="nav-link">Services</a>
+          <a href="users.html" class="nav-link active">Users</a>
         </nav>
       </div>
     </header>
     <main class="membership-main">
       <div class="container grid">
         <div class="title-block">
-          <h2>Add Service</h2>
+          <h2>Add User</h2>
         </div>
         <button class="btn btn-add">Back</button>
         <div class="add-container">
           <form class="form">
             <label for="name">Name</label>
             <input type="text" id="name" placeholder="Name" />
-            <label for="price">Price</label>
-            <input type="number" min="0" step="0.01" id="price" placeholder="Price" />
-            <label for="description">Description</label>
-            <textarea id="description" cols="30" rows="3"></textarea>
+            <input type="text" id="surname" placeholder="Surname" />
+            <input type="text" id="email" placeholder="Email" />
+            <select name="service_id" id="service_id">
+              <option value="">Loading...</option>
+            </select>
             <div class="control">
               <button id="cancel-btn" type="button">Cancel</button>
               <button type="submit">Create</button>

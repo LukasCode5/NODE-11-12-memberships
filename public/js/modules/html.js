@@ -1,4 +1,5 @@
 import { deleteService } from '../services.js';
+import { BASE_URL } from './config.js';
 
 function makeEl(tagName, text, dest, elClass = null) {
   const el = document.createElement(tagName);
@@ -23,9 +24,15 @@ export function createCard(newCardObj) {
   // makeEl('button', 'delete', articleEl, 'btn btn-delete');
   const btn = makeEl('button', '', articleEl, 'btn btn-delete');
   makeEl('i', '', btn, 'fa fa-trash');
-  btn.onclick = () => {
-    console.log('delete ', newCardObj._id);
-    deleteService(newCardObj._id);
+  btn.onclick = async () => {
+    const foundSer = await findService(newCardObj._id);
+    // console.log('foundSer ===', foundSer);
+    if (foundSer === true) {
+      alert('This service is in use');
+    } else {
+      deleteService(newCardObj._id);
+      // console.log('delete ', newCardObj._id);
+    }
   };
 
   // console.log('articleEl ===', articleEl);
@@ -40,4 +47,12 @@ export function renderCards(cardArr, dest) {
     const card = createCard(cObj);
     dest.append(card);
   });
+}
+
+async function findService(targetServiceId) {
+  const response = await fetch(`${BASE_URL}/services`);
+  const ats = await response.json();
+  const foundService = ats.find((sObj) => sObj._id === targetServiceId);
+  // console.log('foundService ===', foundService);
+  return foundService.userCount > 0 ? true : false;
 }
