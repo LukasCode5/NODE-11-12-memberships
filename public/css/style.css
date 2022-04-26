@@ -5,6 +5,7 @@
 /*                                  INDEX.HTML*/
 /*  Header ======================================= */
 
+
 .main-nav{
     display: flex;
     gap: 20px;
@@ -93,4 +94,8 @@
 
 .form button[type='submit']{
   background-color: dodgerblue;
+}
+
+.membership-main{
+  height: 96vh;
 }
