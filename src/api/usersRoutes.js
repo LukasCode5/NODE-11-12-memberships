@@ -35,7 +35,7 @@ usersRoutes.get('/users/:order', async (req, res) => {
     console.log('error === in getting users/:order', error);
     res.status(500).json('Something went wrong');
   } finally {
-    await dbClient.close;
+    await dbClient.close();
   }
 });
 
